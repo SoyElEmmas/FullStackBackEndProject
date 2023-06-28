@@ -7,6 +7,7 @@ import moviesRoutes from './routes/movies.routes'
 import authRoutes from './routes/auth.routes'
 import usersRoutes from "./routes/user.routes"
 import express from "express";
+import dotenv from "dotenv"
 
 //inicia el server
 const app = expres();

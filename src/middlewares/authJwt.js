@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
-import config from "../config";
+//import config from "../config";
 import User from "../models/User";
 import Role from "../models/Role"
+import dotenv from "dotenv"
+dotenv.config()
+const JWT_SECRET = process.env.JWT_SECRET
 
 export const verifyToken = async (req, res, next) => {
   try {
@@ -10,7 +13,7 @@ export const verifyToken = async (req, res, next) => {
 
     if (!token) return res.status(403).json({ message: "No token provided" });
 
-    const decoded = jwt.verify(token, config.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     //se extrae el id y se guarda en el request
     req.userId = decoded.id;
 
@@ -30,17 +33,20 @@ export const isAdmin = async (req,res,next) =>{
 
     //busca los roles del usuario
     const roles = await Role.find({_id: {$in: user.roles}})
+    console.log('roles: '+roles);
 
     //recorre los roles del usuario en busca del role requerido
     for(let i = 0; roles.length; i++){
-        if(roles[i].name === "admin"){
+      console.log('Admin roles[i].name '+roles[i].name);
+        if(roles[i].name === 'admin'){
+            console.log('roles[i].name '+roles[i].name);
             //si encuentra el rol, continua
             next();
             return;
         }
-        //si no encuentra el rol, no continua
-        return res.status(403).json({message:"Require Admin Role"})
     }
+    //si no encuentra el rol, no continua
+    return res.status(403).json({message:"Require Admin Role"})
 }
 
 export const isModerator = async (req,res,next) =>{
@@ -54,11 +60,11 @@ export const isModerator = async (req,res,next) =>{
     for(let i = 0; roles.length; i++){
         if(roles[i].name === "moderator"){
             //si encuentra el rol, continua
+            console.log('roles[i].name '+roles[i].name);
             next();
             return;
-        }
-        //si no encuentra el rol, no continua
-        return res.status(403).json({message:"Requiere Moderator Role"})
+        }   
     }
- 
+    //si no encuentra el rol, no continua
+    return res.status(403).json({message:"Requiere Moderator Role"})
 }

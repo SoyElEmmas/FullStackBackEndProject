@@ -1,7 +1,10 @@
 import User from "../models/User";
 import Role from '../models/Role'
 import jwt from "jsonwebtoken";
-import config from '../config'
+import dotenv from "dotenv"
+dotenv.config()
+//import config from '../config'
+const JWT_SECRET = process.env.JWT_SECRET
 
 export const signUp = async (req, res) => {
   const { username, email, password,roles } = req.body;
@@ -35,7 +38,7 @@ export const signUp = async (req, res) => {
   const userSaved = await newUser.save();
   
   //genera un token
-  const token = jwt.sign({id:userSaved._id}, config.JWT_SECRET, {
+  const token = jwt.sign({id:userSaved._id}, JWT_SECRET, {
     expiresIn: 1200, // 20 mins
   });
 
@@ -62,7 +65,7 @@ export const signIn = async (req, res) => {
   console.log(`userFound: ${userFound}`);
 
   //genera un token
-  const token = jwt.sign({id:userFound._id}, config.JWT_SECRET, {
+  const token = jwt.sign({id:userFound._id}, JWT_SECRET, {
     expiresIn: 1200, // 20 mins
   });
 

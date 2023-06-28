@@ -2,7 +2,9 @@
 
 import app from './app'
 import './database'
-const port = process.env.port || 5001
+import dotenv from "dotenv"
+
+const port = process.env.port || 5000
 const connectDB = require('./database')
 
 //connectDB()

@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv"
+dotenv.config()
 
-mongoose.connect//(process.env.MONGO_URI)
-                ('mongodb+srv://emmanuelreyesp:gajOb2A5DPs1bSMS@practices01.n9ecvg6.mongodb.net/Movies?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URI)
 .then(db => console.log(`MongoDB Connected`) )
 .catch(error => console.error(error))
 
-/* const mongoose = require('mongoose')
+/*const mongoose = require('mongoose')
 
 const connectDB = async () => {
     try {
+        console.log('Mongo URI: '+process.env.MONGO_URI);
         const conn = await mongoose.connect(process.env.MONGO_URI)
         console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
@@ -17,4 +19,4 @@ const connectDB = async () => {
     }
 }
 
-module.exports = connectDB */
+module.exports = connectDB*/ 
