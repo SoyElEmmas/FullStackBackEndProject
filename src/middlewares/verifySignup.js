@@ -26,13 +26,15 @@ export const checkRoleExisted = async(req, res, next) =>{
     if (!roles) {
         return res.status(404).json({message:'no Roles finded'}) 
     }else {
-        for (let i = 0; i < receivedRoles.length; i++) {
-            //valida si los roles recibidos se encuentran en los roles de la BD
-            if (!rolesName.includes(receivedRoles[i])) {
-                return res.status(404).json({message:'Role '+receivedRoles[i]+' does not exist'})
-            }
-            
+        if (receivedRoles) {
+            for (let i = 0; i < receivedRoles.length; i++) {
+                //valida si los roles recibidos se encuentran en los roles de la BD
+                if (!rolesName.includes(receivedRoles[i])) {
+                    return res.status(404).json({message:'Role '+receivedRoles[i]+' does not exist'})
+                }            
+            }            
         }
+
     }
 
     next()
