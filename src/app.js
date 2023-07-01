@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes'
 import usersRoutes from "./routes/user.routes"
 import express from "express";
 import dotenv from "dotenv"
+import cors from 'cors'
 
 //inicia el server
 const app = expres();
@@ -18,6 +19,7 @@ createRoles()
 app.set("pkg", pkg);
 
 app.use(morgan("dev"));
+app.use(cors())
 app.use(express.json());
 
 app.get("/", (req, res) => {
