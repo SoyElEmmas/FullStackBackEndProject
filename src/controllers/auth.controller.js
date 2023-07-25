@@ -62,12 +62,12 @@ export const signIn = async (req, res) => {
 
   if (!matchPassword) return res.status(401).json({token:null,message:'invalid password'})
 
-  console.log(`userFound: ${userFound}`);
+  //console.log(`userFound: ${userFound}`);
 
   //genera un token
   const token = jwt.sign({id:userFound._id}, JWT_SECRET, {
     expiresIn: 1200, // 20 mins
   });
 
-  res.json({"token":token});
+  res.json({"token":token, user:userFound});
 };
